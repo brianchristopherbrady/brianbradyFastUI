@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "updates type naming from TextFieldType to TextInputType",
+  "packageName": "@microsoft/fast-foundation",
+  "email": "brianbrady@microsoft.com",
+  "dependentChangeType": "patch"
+}
