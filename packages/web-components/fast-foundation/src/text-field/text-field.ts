@@ -11,9 +11,9 @@ import {
 } from "../patterns/index.js";
 import { applyMixins } from "../utilities/apply-mixins.js";
 import { FormAssociatedTextField } from "./text-field.form-associated.js";
-import { TextFieldType } from "./text-field.options.js";
+import { TextInputType } from "./text-field.options.js";
 
-export { TextFieldType };
+export { TextInputType };
 
 /**
  * Text field configuration options
@@ -88,7 +88,7 @@ export class FASTTextField extends FormAssociatedTextField {
      * HTML Attribute: type
      */
     @attr
-    public type: TextFieldType = TextFieldType.text;
+    public type: TextInputType = TextInputType.text;
     private typeChanged(): void {
         if (this.proxy instanceof HTMLInputElement) {
             this.proxy.type = this.type;

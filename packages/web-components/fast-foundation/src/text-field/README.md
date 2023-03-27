@@ -88,7 +88,7 @@ This component is built with the expectation that focus is delegated to the inpu
 
 | Name            | Description          | Type                                                                              |
 | --------------- | -------------------- | --------------------------------------------------------------------------------- |
-| `TextFieldType` | Text field sub-types | `{ email: "email", password: "password", tel: "tel", text: "text", url: "url", }` |
+| `TextInputType` | Text field sub-types | `{ email: "email", password: "password", tel: "tel", text: "text", url: "url", }` |
 
 <hr/>
 
@@ -109,7 +109,7 @@ This component is built with the expectation that focus is delegated to the inpu
 | `readOnly`    | public  | `boolean`       |         | When true, the control will be immutable by user interaction. See [readonly HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/readonly) for more information.                                 |                         |
 | `autofocus`   | public  | `boolean`       |         | Indicates that this element should get focus after the page finishes loading. See [autofocus HTML attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#htmlattrdefautofocus) for more information. |                         |
 | `placeholder` | public  | `string`        |         | Sets the placeholder value of the element, generally used to provide a hint to the user.                                                                                                                                    |                         |
-| `type`        | public  | `TextFieldType` |         | Allows setting a type or mode of text.                                                                                                                                                                                      |                         |
+| `type`        | public  | `TextInputType` |         | Allows setting a type or mode of text.                                                                                                                                                                                      |                         |
 | `list`        | public  | `string`        |         | Allows associating a [datalist](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/datalist) to the element by https://developer.mozilla.org/en-US/docs/Web/API/Element/id.                                      |                         |
 | `maxlength`   | public  | `number`        |         | The maximum number of characters a user can enter.                                                                                                                                                                          |                         |
 | `minlength`   | public  | `number`        |         | The minimum number of characters a user can enter.                                                                                                                                                                          |                         |

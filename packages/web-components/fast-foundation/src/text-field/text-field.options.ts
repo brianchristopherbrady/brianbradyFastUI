@@ -2,7 +2,7 @@
  * Text field sub-types
  * @public
  */
-export const TextFieldType = {
+export const TextInputType = {
     /**
      * An email TextField
      */
@@ -33,4 +33,4 @@ export const TextFieldType = {
  * Types for the text field sub-types
  * @public
  */
-export type TextFieldType = typeof TextFieldType[keyof typeof TextFieldType];
+export type TextInputType = typeof TextInputType[keyof typeof TextInputType];

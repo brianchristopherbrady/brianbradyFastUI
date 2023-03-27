@@ -1,7 +1,7 @@
 import { html } from "@microsoft/fast-element";
 import type { Meta, Story, StoryArgs } from "../../__test__/helpers.js";
 import { renderComponent } from "../../__test__/helpers.js";
-import { FASTTextField, TextFieldType } from "../text-field.js";
+import { FASTTextField, TextInputType } from "../text-field.js";
 
 const storyTemplate = html<StoryArgs<FASTTextField>>`
     <fast-text-field
@@ -68,7 +68,7 @@ export default {
         required: { control: "boolean" },
         size: { control: "number" },
         spellcheck: { control: "boolean" },
-        type: { control: "select", options: Object.values(TextFieldType) },
+        type: { control: "select", options: Object.values(TextInputType) },
         value: { control: "text" },
         ariaAtomic: { control: "text" },
         ariaBusy: { control: "text" },
