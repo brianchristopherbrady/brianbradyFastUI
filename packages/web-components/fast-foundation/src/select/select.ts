@@ -64,6 +64,26 @@ export class FASTSelect extends FormAssociatedSelect {
     public open: boolean = false;
 
     /**
+     * The aslistbox attribute.
+     *
+     * @public
+     * @remarks
+     * HTML Attribute: open
+     */
+    @attr({ attribute: "as-listbox", mode: "boolean" })
+    public asListbox: boolean = false;
+
+    /**
+     * The placeholder attribute.
+     *
+     * @public
+     * @remarks
+     * HTML Attribute: placeholder
+     */
+    @attr({ attribute: "placeholder" })
+    public placeholder: string;
+
+    /**
      * Sets focus and synchronizes ARIA attributes when the open property changes.
      *
      * @param prev - the previous open value
@@ -117,7 +137,7 @@ export class FASTSelect extends FormAssociatedSelect {
      */
     @volatile
     public get collapsible(): boolean {
-        return !(this.multiple || typeof this.size === "number");
+        return !(typeof this.size === "number" || this.asListbox);
     }
 
     /**
@@ -250,7 +270,6 @@ export class FASTSelect extends FormAssociatedSelect {
                     this.open = false;
                     return;
                 }
-
                 Object.assign(this.listbox.style, {
                     position: "fixed",
                     top: "0",
@@ -268,7 +287,19 @@ export class FASTSelect extends FormAssociatedSelect {
      */
     public get displayValue(): string {
         Observable.track(this, "displayValue");
-        return this.firstSelectedOption?.text ?? "";
+        if (
+            (this.selectedOptions.length == 0 || this.selectedIndex == -1) &&
+            this.placeholder
+        ) {
+            return this.placeholder;
+        }
+        if (this.multiple) {
+            const selectedOptionsText = this.selectedOptions.map(option => option.text);
+            this.currentValue = this.firstSelectedOption?.text;
+            return selectedOptionsText.join(", ") || "";
+        } else {
+            return this.firstSelectedOption?.text ?? "";
+        }
     }
 
     /**
@@ -325,7 +356,12 @@ export class FASTSelect extends FormAssociatedSelect {
 
         super.clickHandler(e);
 
-        this.open = this.collapsible && !this.open;
+        // If multiple select mode is enabled, prevent the dropdown from closing
+        if (this.multiple) {
+            this.open = true;
+        } else {
+            this.open = this.collapsible && !this.open;
+        }
 
         if (!this.open && this.indexWhenOpened !== this.selectedIndex) {
             this.updateValue(true);
@@ -474,7 +510,11 @@ export class FASTSelect extends FormAssociatedSelect {
             return;
         }
 
-        this.selectedIndex = 0;
+        if (this.placeholder || this.multiple) {
+            this.selectedIndex = -1;
+        } else {
+            this.selectedIndex = 0;
+        }
     }
 
     /**
@@ -510,8 +550,10 @@ export class FASTSelect extends FormAssociatedSelect {
         switch (key) {
             case keySpace: {
                 e.preventDefault();
-                if (this.collapsible && this.typeAheadExpired) {
-                    this.open = !this.open;
+                if (this.multiple || this.aslistbox) {
+                    this.open = true;
+                } else {
+                    this.open = this.collapsible && !this.open;
                 }
                 break;
             }
@@ -524,7 +566,18 @@ export class FASTSelect extends FormAssociatedSelect {
 
             case keyEnter: {
                 e.preventDefault();
-                this.open = !this.open;
+                if (this.multiple || this.aslistbox) {
+                    if (!this.open) {
+                        this.open = true;
+                        break;
+                    }
+                    this._options[this.activeIndex].selected = !this._options[
+                        this.activeIndex
+                    ].selected;
+                    break;
+                } else {
+                    this.open = this.collapsible && !this.open;
+                }
                 break;
             }
 
@@ -546,7 +599,7 @@ export class FASTSelect extends FormAssociatedSelect {
             }
         }
 
-        if (!this.open && this.indexWhenOpened !== this.selectedIndex) {
+        if (this.indexWhenOpened !== this.selectedIndex) {
             this.updateValue(true);
             this.indexWhenOpened = this.selectedIndex;
         }
