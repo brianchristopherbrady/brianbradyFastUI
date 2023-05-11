@@ -6,7 +6,6 @@ const styles = css`
     :host {
         display: inline-flex;
         --elevation: 14;
-        background: var(--neutral-fill-input-rest);
         border-radius: calc(var(--control-corner-radius) * 1px);
         border: calc(var(--stroke-width) * 1px) solid var(--accent-fill-rest);
         box-sizing: border-box;
@@ -36,12 +35,13 @@ const styles = css`
         display: flex;
         flex-direction: column;
         padding: calc(var(--design-unit) * 1px) 0;
-        max-height: calc(
+        --max-height: calc(
             (
-                    var(--size, 0) * var(--height-number) +
+                    var(--size) * var(--height-number) +
                         (var(--design-unit) * var(--stroke-width) * 2)
                 ) * 1px
         );
+        max-height: var(--max-height, fit-content);
         overflow-y: auto;
         position: fixed;
         top: 0;
