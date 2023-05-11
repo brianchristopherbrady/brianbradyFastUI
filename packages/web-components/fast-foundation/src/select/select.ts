@@ -64,14 +64,14 @@ export class FASTSelect extends FormAssociatedSelect {
     public open: boolean = false;
 
     /**
-     * The aslistbox attribute.
+     * The listbox mode attribute.
      *
      * @public
      * @remarks
-     * HTML Attribute: open
+     * HTML Attribute: listbox-mode
      */
-    @attr({ attribute: "as-listbox", mode: "boolean" })
-    public asListbox: boolean = false;
+    @attr({ attribute: "listbox-mode", mode: "boolean" })
+    public listboxMode: boolean = false;
 
     /**
      * The placeholder attribute.
@@ -137,7 +137,7 @@ export class FASTSelect extends FormAssociatedSelect {
      */
     @volatile
     public get collapsible(): boolean {
-        return !(typeof this.size === "number" || this.asListbox);
+        return !(typeof this.size === "number" || this.listboxMode);
     }
 
     /**
@@ -291,6 +291,7 @@ export class FASTSelect extends FormAssociatedSelect {
             (this.selectedOptions.length == 0 || this.selectedIndex == -1) &&
             this.placeholder
         ) {
+            this.currentValue = this.firstSelectedOption?.text;
             return this.placeholder;
         }
         if (this.multiple) {
@@ -550,7 +551,7 @@ export class FASTSelect extends FormAssociatedSelect {
         switch (key) {
             case keySpace: {
                 e.preventDefault();
-                if (this.multiple || this.aslistbox) {
+                if (this.multiple || this.listboxMode) {
                     this.open = true;
                 } else {
                     this.open = this.collapsible && !this.open;
@@ -566,7 +567,7 @@ export class FASTSelect extends FormAssociatedSelect {
 
             case keyEnter: {
                 e.preventDefault();
-                if (this.multiple || this.aslistbox) {
+                if (this.multiple || this.listboxMode) {
                     if (!this.open) {
                         this.open = true;
                         break;

@@ -28,7 +28,7 @@ export function selectTemplate<T extends FASTSelect>(
             @mousedown="${(x, c) => x.mousedownHandler(c.event as MouseEvent)}"
         >
             ${when(
-                x => !x.asListbox && x.collapsible,
+                x => !x.listboxMode && x.collapsible,
                 html<T>`
                     <div
                         class="control"
@@ -58,7 +58,7 @@ export function selectTemplate<T extends FASTSelect>(
                 role="listbox"
                 ?disabled="${x => x.disabled}"
                 ?hidden="${x =>
-                    !x.asListbox ? (x.collapsible ? !x.open : false) : false}"
+                    !x.listboxMode ? (x.collapsible ? !x.open : false) : false}"
                 ${ref("listbox")}
             >
                 <slot
